@@ -4,6 +4,7 @@
  */
 package vivero;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,7 +13,25 @@ import java.util.Date;
  */
 public class FabricaPlantas {
     
-    public FabricaPlantas(){}
+    protected ArrayList<String> plantasPerennes;
+    protected ArrayList<String> plantasNoPerennes;
+    
+    public FabricaPlantas(){
+        
+        plantasPerennes = new ArrayList();
+        plantasNoPerennes = new ArrayList();
+        
+        plantasPerennes.add("Pino");
+        plantasPerennes.add("Rosa");
+        plantasPerennes.add("Jazmin");
+        plantasPerennes.add("Limon");
+        
+        plantasNoPerennes.add("Soja");
+        plantasNoPerennes.add("Maiz");
+        plantasNoPerennes.add("Alfa");
+        plantasNoPerennes.add("Mani");
+        
+    }
     
     public Planta crearPlanta(String nombre, int ubicacion, String fechaPlantado){
 
@@ -69,6 +88,14 @@ public class FabricaPlantas {
         
         return P;
         
+    }
+    
+    public ArrayList<String> getPlantasPerennes(){
+        return plantasPerennes;
+    }
+    
+    public ArrayList<String> getPlantasNoPerennes(){
+        return plantasNoPerennes;
     }
     
 }

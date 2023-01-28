@@ -4,6 +4,7 @@
 
 package vivero;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import org.json.*;
@@ -109,6 +110,15 @@ public class Vivero {
             }
         }
         
+    }
+    
+    
+    public ArrayList<String> getPlantasPerennes(){
+        return fabrica.getPlantasPerennes();
+    }
+    
+    public ArrayList<String> getPlantasNoPerennes(){
+        return fabrica.getPlantasNoPerennes();
     }
     
 }

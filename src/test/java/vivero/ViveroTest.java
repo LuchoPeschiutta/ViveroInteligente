@@ -28,7 +28,7 @@ public class ViveroTest {
         assertEquals(1, vivero.getUbicacionesOcupadas().size());
         assertTrue(vivero.agregarPlanta("Rosa", 1));
         assertEquals(2, vivero.getUbicacionesOcupadas().size());
-        assertFalse(vivero.agregarPlanta("Pino", 0));
+        assertFalse(vivero.agregarPlanta("Limon", 0));
         assertEquals(2, vivero.getUbicacionesOcupadas().size());
         
         assertFalse(vivero.eliminarPlanta(3));
