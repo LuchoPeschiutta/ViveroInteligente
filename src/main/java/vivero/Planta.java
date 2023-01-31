@@ -125,6 +125,8 @@ public abstract class Planta {
         JS.put("tMin", getEtapaActual().getTemperatura()[1]);
         JS.put("lMax", getEtapaActual().getLuminosidad()[0]);
         JS.put("lMin", getEtapaActual().getLuminosidad()[1]);
+        JS.put("DuracionLimite", getEtapaActual().getDuracionLimite());
+        JS.put("DuracionActual", getEtapaActual().getDuracionActual());
         
         return JS;
     }

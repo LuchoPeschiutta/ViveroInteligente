@@ -78,7 +78,7 @@ public class EtapaTest {
         assertEquals(etapa.getLuminosidad()[0], etapa2.getLuminosidad()[0]);
         assertEquals(etapa.getLuminosidad()[1], etapa2.getLuminosidad()[1]);
         assertEquals(etapa.getNombreTipo(), etapa2.getNombreTipo());
-        assertEquals(etapa.getDuracion(), etapa2.getDuracion());
+        assertEquals(etapa.getDuracionLimite(), etapa2.getDuracionLimite());
         assertNotEquals(etapa.getDuracionActual(), etapa2.getDuracionActual());
         
     }

@@ -18,7 +18,7 @@ public class Etapa {
     protected float[] temperatura = new float[2];
     protected float[] luminosidad = new float[2];
     
-    protected int duracion;
+    protected int duracionLimite;
     protected int duracionActual;
 
     public Etapa(int tipo, float hMax, float hMin, float tMax, float tMin, float lMax, float lMin, int duracion) {
@@ -40,7 +40,7 @@ public class Etapa {
         luminosidad[0] = lMax;
         luminosidad[1] = lMin;
         
-        this.duracion = duracion;
+        this.duracionLimite = duracion;
         duracionActual = 0;
         
     }
@@ -59,7 +59,7 @@ public class Etapa {
         humedad = etapa.getHumedad();
         temperatura = etapa.getTemperatura();
         luminosidad = etapa.getLuminosidad();
-        duracion = etapa.getDuracion();
+        duracionLimite = etapa.getDuracionLimite();
         duracionActual = 0;
     }
     
@@ -83,8 +83,8 @@ public class Etapa {
         return luminosidad;
     }
 
-    public int getDuracion() {
-        return duracion;
+    public int getDuracionLimite() {
+        return duracionLimite;
     }
 
     public int getDuracionActual() {
@@ -93,7 +93,7 @@ public class Etapa {
     
     public boolean paso(){
         duracionActual += 1;
-        return duracionActual < duracion;
+        return duracionActual < duracionLimite;
     }
     
 }

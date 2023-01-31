@@ -60,16 +60,19 @@ public class Vivero {
         
     }
     
-    public Set<Integer> getUbicacionesOcupadas(){
-        return ubicacionesPlantas.keySet();
+    public Integer[] getUbicacionesOcupadas(){
+        Set<Integer> set = ubicacionesPlantas.keySet();
+        Integer[] lista = new Integer[set.size()];
+        int i = 0;
+        for(Integer valor : set){
+            lista[i] = valor;
+            i++;
+        }
+        return lista;
     }
     
-    public Planta getPlanta(int ubicacion){
-        if(ubicacionesPlantas.containsKey(ubicacion)){
-            return ubicacionesPlantas.get(ubicacion);
-        }else{
-            return null;
-        }
+    public boolean ubicacionEstaOcupada(int ubicacion){
+        return ubicacionesPlantas.keySet().contains(ubicacion);
     }
 
     public boolean actualizarPlanta(int ubicacion, float humedad, float temperatura, float luminosidad){
@@ -113,12 +116,12 @@ public class Vivero {
     }
     
     
-    public ArrayList<String> getPlantasPerennes(){
-        return fabrica.getPlantasPerennes();
+    public ArrayList<String> getListaPlantasPerennes(){
+        return fabrica.getListaPlantasPerennes();
     }
     
-    public ArrayList<String> getPlantasNoPerennes(){
-        return fabrica.getPlantasNoPerennes();
+    public ArrayList<String> getListaPlantasNoPerennes(){
+        return fabrica.getListaPlantasNoPerennes();
     }
     
 }

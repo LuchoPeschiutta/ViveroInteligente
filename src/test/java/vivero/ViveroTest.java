@@ -4,6 +4,7 @@
  */
 package vivero;
 
+import java.util.Arrays;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,38 +24,44 @@ public class ViveroTest {
         
         Vivero vivero = new Vivero();
         
-        assertEquals(0, vivero.getUbicacionesOcupadas().size());
+        assertEquals(0, vivero.getUbicacionesOcupadas().length);
         assertTrue(vivero.agregarPlanta("Pino", 0));
-        assertEquals(1, vivero.getUbicacionesOcupadas().size());
+        assertEquals(1, vivero.getUbicacionesOcupadas().length);
         assertTrue(vivero.agregarPlanta("Rosa", 1));
-        assertEquals(2, vivero.getUbicacionesOcupadas().size());
+        assertEquals(2, vivero.getUbicacionesOcupadas().length);
         assertFalse(vivero.agregarPlanta("Limon", 0));
-        assertEquals(2, vivero.getUbicacionesOcupadas().size());
+        assertEquals(2, vivero.getUbicacionesOcupadas().length);
         
         assertFalse(vivero.eliminarPlanta(3));
         assertTrue(vivero.eliminarPlanta(1));
-        assertEquals(1, vivero.getUbicacionesOcupadas().size());
+        assertEquals(1, vivero.getUbicacionesOcupadas().length);
         
         
     }
     
+    
     @Test
-    public void TestGetPlanta() {
+    public void TestUbicacionesOcupadas(){
         
         Vivero vivero = new Vivero();
-        
         vivero.agregarPlanta("Pino", 0);
+        vivero.agregarPlanta("Pino", 15);
+        vivero.agregarPlanta("Pino", 10);
         
-        assertEquals("Pino", vivero.getPlanta(0).getNombre());
+        assertTrue(vivero.ubicacionEstaOcupada(0));
+        assertTrue(vivero.ubicacionEstaOcupada(15));
+        assertTrue(vivero.ubicacionEstaOcupada(10));
         
-        vivero.agregarPlanta("Maiz", 1);
+        Integer[] lista = vivero.getUbicacionesOcupadas();
         
-        assertEquals("Maiz", vivero.getPlanta(1).getNombre());
+        Arrays.sort(lista);
         
-        assertNull(vivero.getPlanta(5));
-        
+        assertTrue(lista[0]==0);
+        assertTrue(lista[1]==10);
+        assertTrue(lista[2]==15);
         
     }
+    
     
     @Test
     public void TestActualizarPlanta() {
@@ -93,7 +100,7 @@ public class ViveroTest {
             vivero.avanzarPaso();
         }
         
-        assertEquals(2,vivero.getPlanta(0).getEtapaActual().getDuracionActual());
+        assertEquals(2,vivero.getEstadoPlanta(0).getInt("DuracionActual"));
         
         vivero.agregarPlanta("Rosa", 1);
         vivero.agregarPlanta("Limon", 2);
@@ -102,9 +109,9 @@ public class ViveroTest {
             vivero.avanzarPaso();
         }
         
-        assertEquals(4,vivero.getPlanta(0).getEtapaActual().getDuracionActual());
-        assertEquals(2,vivero.getPlanta(1).getEtapaActual().getDuracionActual());
-        assertEquals(2,vivero.getPlanta(2).getEtapaActual().getDuracionActual());
+        assertEquals(4,vivero.getEstadoPlanta(0).getInt("DuracionActual"));
+        assertEquals(2,vivero.getEstadoPlanta(1).getInt("DuracionActual"));
+        assertEquals(2,vivero.getEstadoPlanta(2).getInt("DuracionActual"));
         
         
     }

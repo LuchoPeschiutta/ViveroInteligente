@@ -90,11 +90,11 @@ public class FabricaPlantas {
         
     }
     
-    public ArrayList<String> getPlantasPerennes(){
+    public ArrayList<String> getListaPlantasPerennes(){
         return plantasPerennes;
     }
     
-    public ArrayList<String> getPlantasNoPerennes(){
+    public ArrayList<String> getListaPlantasNoPerennes(){
         return plantasNoPerennes;
     }
     

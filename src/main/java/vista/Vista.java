@@ -79,12 +79,15 @@ public class Vista extends javax.swing.JFrame {
         PlantasDisponibles = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         TipoPlantas = new javax.swing.JComboBox<>();
-        PlantaSeleccionada = new javax.swing.JTextField();
+        PlantaSeleccionadaAgregar = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        UbicacionSeleccionada = new javax.swing.JTextField();
+        UbicacionAgregar = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
+        btnBorrar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        UbicacionBorrar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,7 +143,7 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        PlantaSeleccionada.setEditable(false);
+        PlantaSeleccionadaAgregar.setEditable(false);
 
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -153,10 +156,10 @@ public class Vista extends javax.swing.JFrame {
 
         jLabel3.setText("Ubicacion:");
 
-        UbicacionSeleccionada.setToolTipText("");
-        UbicacionSeleccionada.addKeyListener(new java.awt.event.KeyAdapter() {
+        UbicacionAgregar.setToolTipText("");
+        UbicacionAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                UbicacionSeleccionadaKeyTyped(evt);
+                UbicacionAgregarKeyTyped(evt);
             }
         });
 
@@ -181,8 +184,8 @@ public class Vista extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(57, 57, 57)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PlantaSeleccionada, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(UbicacionSeleccionada))))
+                            .addComponent(PlantaSeleccionadaAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(UbicacionAgregar))))
                 .addContainerGap(343, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -197,12 +200,12 @@ public class Vista extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(PlantaSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PlantaSeleccionadaAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(UbicacionSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(UbicacionAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)
                         .addComponent(btnCrear)))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -210,15 +213,44 @@ public class Vista extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Agregar", jPanel2);
 
+        btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Ubicacion:");
+
+        UbicacionBorrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                UbicacionBorrarKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1062, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel4)
+                .addGap(47, 47, 47)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBorrar)
+                    .addComponent(UbicacionBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(805, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 459, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(UbicacionBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addComponent(btnBorrar)
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Quitar", jPanel3);
@@ -256,21 +288,21 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_TipoPlantasActionPerformed
 
     private void PlantasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlantasDisponiblesMouseClicked
-        PlantaSeleccionada.setText(PlantasDisponibles.getSelectedValue().toString());
+        PlantaSeleccionadaAgregar.setText(PlantasDisponibles.getSelectedValue().toString());
     }//GEN-LAST:event_PlantasDisponiblesMouseClicked
 
-    private void UbicacionSeleccionadaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UbicacionSeleccionadaKeyTyped
+    private void UbicacionAgregarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UbicacionAgregarKeyTyped
        
         if(!Character.isDigit(evt.getKeyChar())){
             evt.consume();
         }
         
-    }//GEN-LAST:event_UbicacionSeleccionadaKeyTyped
+    }//GEN-LAST:event_UbicacionAgregarKeyTyped
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         
-        String nombre = PlantaSeleccionada.getText();
-        String ubicacion = UbicacionSeleccionada.getText();
+        String nombre = PlantaSeleccionadaAgregar.getText();
+        String ubicacion = UbicacionAgregar.getText();
         
         if(nombre.length() <= 0 || ubicacion.length() <= 0){
             
@@ -278,7 +310,7 @@ public class Vista extends javax.swing.JFrame {
             
         }else{
             
-            if(controlador.getUbicacionesOcupadas().contains(Integer.valueOf(ubicacion))){
+            if(controlador.ubicacionEstaOcupada(Integer.valueOf(ubicacion))){
                 
                 JOptionPane.showMessageDialog(null, "La ubicacion seleccionada ya esta ocupada");
                 
@@ -286,28 +318,69 @@ public class Vista extends javax.swing.JFrame {
                 
                 if(!controlador.crearPlanta(nombre, Integer.valueOf(ubicacion))){
                     JOptionPane.showMessageDialog(null, "Error inesperado al crear la nueva planta");
-                }else{
-                    llenarLista();
+                }  
+            }
+            
+        }                     
+
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void UbicacionBorrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UbicacionBorrarKeyTyped
+        
+        if(!Character.isDigit(evt.getKeyChar())){
+            evt.consume();
+        }
+    }//GEN-LAST:event_UbicacionBorrarKeyTyped
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        String ubicacion = UbicacionBorrar.getText();
+        
+        if(ubicacion.length() <= 0){
+            
+            JOptionPane.showMessageDialog(null, "Debe ingresar una ubicacion");
+            
+        }else{
+            
+            if(!controlador.ubicacionEstaOcupada(Integer.valueOf(ubicacion))){
+                
+                JOptionPane.showMessageDialog(null, "Esta ubicacion no contiene nunguna planta");
+                
+            }else{
+                
+                if(JOptionPane.showConfirmDialog(null, "Desea remover la planta ingresada?", "Confirmacion", JOptionPane.YES_NO_OPTION) == 0){
+                    
+                    if(!controlador.eliminarPlanta(Integer.valueOf(ubicacion))){
+                        JOptionPane.showMessageDialog(null, "Error inesperado al remover la planta");
+                    }
                 }
                 
             }
             
         }
-        
-    }//GEN-LAST:event_btnCrearActionPerformed
+    }//GEN-LAST:event_btnBorrarActionPerformed
 
-    
+    private boolean contains(Integer[] lista, int valor){
+        for(Integer i: lista){
+            if(i == valor){
+                return true;
+            }
+        }
+        return false;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField PlantaSeleccionada;
+    private javax.swing.JTextField PlantaSeleccionadaAgregar;
     private javax.swing.JList<String> PlantasDisponibles;
     private javax.swing.JTable TablaPlantas;
     private javax.swing.JComboBox<String> TipoPlantas;
-    private javax.swing.JTextField UbicacionSeleccionada;
+    private javax.swing.JTextField UbicacionAgregar;
+    private javax.swing.JTextField UbicacionBorrar;
+    private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

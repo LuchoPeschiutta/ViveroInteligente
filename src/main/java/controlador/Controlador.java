@@ -31,19 +31,37 @@ public class Controlador {
     }
     
     public ArrayList<String> getListaPlantasPerennes(){
-        return vivero.getPlantasPerennes();
+        return vivero.getListaPlantasPerennes();
     }
     
     public ArrayList<String> getListaPlantasNoPerennes(){
-        return vivero.getPlantasNoPerennes();
+        return vivero.getListaPlantasNoPerennes();
     }
     
-    public Set<Integer> getUbicacionesOcupadas(){
+    public Integer[] getUbicacionesOcupadas(){
         return vivero.getUbicacionesOcupadas();
     }
     
+    public boolean ubicacionEstaOcupada(int ubicacion){
+        return vivero.ubicacionEstaOcupada(ubicacion);
+    }
+    
     public boolean crearPlanta(String nombre, int ubicacion){
-        return vivero.agregarPlanta(nombre, ubicacion);
+        if(vivero.agregarPlanta(nombre, ubicacion)){
+            vista.llenarLista();
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public boolean eliminarPlanta(int ubicacion){
+        if(vivero.eliminarPlanta(ubicacion)){
+            vista.llenarLista();
+            return true;
+        }else{
+            return false;
+        }
     }
     
     public ArrayList<JSONObject> getEstadosPlantas(){
