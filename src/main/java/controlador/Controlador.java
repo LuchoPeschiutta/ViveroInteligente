@@ -7,6 +7,7 @@ package controlador;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Set;
 import org.json.JSONObject;
 import vivero.Vivero;
@@ -81,6 +82,26 @@ public class Controlador {
     
     public void avanzarPaso(){
         vivero.avanzarPaso();
+        vista.actualizarLista();
+    }
+    
+    public void simularParametros(){
+        
+        float humedad, temperatura, luminosidad;
+        Random rnd = new Random();
+        
+        for(Integer i: vivero.getUbicacionesOcupadas()){
+            
+            //Humedad aleatoria entre 0 y 100
+            humedad = rnd.nextFloat(100);
+            //Temperatura aleatoria entre 5 y 45
+            temperatura = rnd.nextFloat(40) + 5;
+            //Luminosidad aleatoria entre 0 y 100
+            luminosidad = rnd.nextFloat(100);
+            vivero.actualizarPlanta(i, humedad, temperatura, luminosidad);
+                    
+        }
+        
         vista.actualizarLista();
     }
     

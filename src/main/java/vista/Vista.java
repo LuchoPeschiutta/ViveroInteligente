@@ -54,9 +54,9 @@ public class Vista extends javax.swing.JFrame {
             
             if(!planta.getBoolean("Muerta")){
                 fila[2] = "" + planta.getString("Etapa");
-                fila[3] = "" + planta.getDouble("hMax") + " / " + planta.getDouble("Humedad") + " / " + planta.getDouble("hMin");
-                fila[4] = "" + planta.getDouble("tMax") + " / " + planta.getDouble("Temperatura") + " / " + planta.getDouble("tMin");
-                fila[5] = "" + planta.getDouble("lMax") + " / " + planta.getDouble("Luminosidad") + " / " + planta.getDouble("lMin");
+                fila[3] = "" + planta.getDouble("hMax") + " / " + String.format("%.2f", planta.getDouble("Humedad")) + " / " + planta.getDouble("hMin");
+                fila[4] = "" + planta.getDouble("tMax") + " / " + String.format("%.1f",planta.getDouble("Temperatura")) + " / " + planta.getDouble("tMin");
+                fila[5] = "" + planta.getDouble("lMax") + " / " + String.format("%.2f",planta.getDouble("Luminosidad")) + " / " + planta.getDouble("lMin");
                 fila[6] = "" + planta.getInt("DuracionActual") + " / " + planta.getInt("DuracionLimite");
             }else{
                 fila[2] = "Muerta";
@@ -411,7 +411,7 @@ public class Vista extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnSimularValoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularValoresActionPerformed
-        // TODO add your handling code here:
+        controlador.simularParametros();
     }//GEN-LAST:event_btnSimularValoresActionPerformed
 
     private void btnSimularPasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularPasoActionPerformed
