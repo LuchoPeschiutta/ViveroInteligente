@@ -39,21 +39,33 @@ public class Vista extends javax.swing.JFrame {
         
     }
     
-    public void llenarLista(){
+    public void actualizarLista(){
         
-        String[] fila = new String[6];
+        String[] fila = new String[7];
         DefaultTableModel tableModel = (DefaultTableModel) TablaPlantas.getModel();
         ArrayList<JSONObject> lista = controlador.getEstadosPlantas();
         
         tableModel.setRowCount(0);
         
         for(JSONObject planta : lista){
+            
             fila[0] = planta.getString("Nombre");
             fila[1] = "" + planta.getInt("Ubicacion");
-            fila[2] = "" + planta.getDouble("hMax") + " / " + planta.getDouble("Humedad") + " / " + planta.getDouble("hMin");
-            fila[3] = "" + planta.getDouble("tMax") + " / " + planta.getDouble("Temperatura") + " / " + planta.getDouble("tMin");
-            fila[4] = "" + planta.getDouble("lMax") + " / " + planta.getDouble("Luminosidad") + " / " + planta.getDouble("lMin");
-            fila[5] = "" + planta.getInt("DuracionActual") + " / " + planta.getInt("DuracionLimite");
+            
+            if(!planta.getBoolean("Muerta")){
+                fila[2] = "" + planta.getString("Etapa");
+                fila[3] = "" + planta.getDouble("hMax") + " / " + planta.getDouble("Humedad") + " / " + planta.getDouble("hMin");
+                fila[4] = "" + planta.getDouble("tMax") + " / " + planta.getDouble("Temperatura") + " / " + planta.getDouble("tMin");
+                fila[5] = "" + planta.getDouble("lMax") + " / " + planta.getDouble("Luminosidad") + " / " + planta.getDouble("lMin");
+                fila[6] = "" + planta.getInt("DuracionActual") + " / " + planta.getInt("DuracionLimite");
+            }else{
+                fila[2] = "Muerta";
+                fila[3] = "" + planta.getDouble("Humedad");
+                fila[4] = "" + planta.getDouble("Temperatura");
+                fila[5] = "" + planta.getDouble("Luminosidad");
+                fila[6] = "";
+            }
+            
             tableModel.addRow(fila);
         }
         
@@ -72,6 +84,9 @@ public class Vista extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaPlantas = new javax.swing.JTable();
+        btnSimularPaso = new javax.swing.JButton();
+        btnSimularValores = new javax.swing.JButton();
+        btnSimulacionContinua = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         PlantasDisponibles = new javax.swing.JList<>();
@@ -94,14 +109,14 @@ public class Vista extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Ubicacion", "Humedad", "Temperatura", "Luminosidad", "Duracion"
+                "Nombre", "Ubicacion", "Etapa", "Humedad", "Temperatura", "Luminosidad", "Duracion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, true
+                false, true, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -114,14 +129,35 @@ public class Vista extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TablaPlantas);
 
+        btnSimularPaso.setText("Simular Paso");
+        btnSimularPaso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimularPasoActionPerformed(evt);
+            }
+        });
+
+        btnSimularValores.setText("Simular Valores");
+        btnSimularValores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimularValoresActionPerformed(evt);
+            }
+        });
+
+        btnSimulacionContinua.setText("Simulacion Continua");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1050, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSimularPaso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSimularValores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSimulacionContinua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,6 +165,14 @@ public class Vista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(btnSimularPaso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSimularValores)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSimulacionContinua)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Plantas", jPanel1);
@@ -191,7 +235,7 @@ public class Vista extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(PlantaSeleccionadaAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                             .addComponent(UbicacionAgregar))))
-                .addContainerGap(343, Short.MAX_VALUE))
+                .addContainerGap(397, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,7 +288,7 @@ public class Vista extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBorrar)
                     .addComponent(UbicacionBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(805, Short.MAX_VALUE))
+                .addContainerGap(852, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,6 +410,14 @@ public class Vista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
+    private void btnSimularValoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularValoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSimularValoresActionPerformed
+
+    private void btnSimularPasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularPasoActionPerformed
+        controlador.avanzarPaso();
+    }//GEN-LAST:event_btnSimularPasoActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -377,6 +429,9 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JTextField UbicacionBorrar;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnSimulacionContinua;
+    private javax.swing.JButton btnSimularPaso;
+    private javax.swing.JButton btnSimularValores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

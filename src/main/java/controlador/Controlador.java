@@ -52,7 +52,7 @@ public class Controlador {
     
     public boolean crearPlanta(String nombre, int ubicacion){
         if(vivero.agregarPlanta(nombre, ubicacion)){
-            vista.llenarLista();
+            vista.actualizarLista();
             return true;
         }else{
             return false;
@@ -61,7 +61,7 @@ public class Controlador {
     
     public boolean eliminarPlanta(int ubicacion){
         if(vivero.eliminarPlanta(ubicacion)){
-            vista.llenarLista();
+            vista.actualizarLista();
             return true;
         }else{
             return false;
@@ -77,6 +77,11 @@ public class Controlador {
         }
         
         return lista;
+    }
+    
+    public void avanzarPaso(){
+        vivero.avanzarPaso();
+        vista.actualizarLista();
     }
     
     

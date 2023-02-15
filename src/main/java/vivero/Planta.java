@@ -108,6 +108,7 @@ public abstract class Planta {
     
     public JSONObject getEstado(){
         JSONObject JS = new JSONObject();
+        Etapa etapa = getEtapaActual();
         
         JS.put("Nombre", getNombre());
         JS.put("Tipo", getTipo());
@@ -117,17 +118,19 @@ public abstract class Planta {
         JS.put("Luminosidad", getLuminosidad());
         JS.put("FechaPlantado", getFechaPlantado());
         JS.put("Muerta", estaMuerta());
-            
-        JS.put("Etapa", getEtapaActual().getNombreTipo());
-        JS.put("hMax", getEtapaActual().getHumedad()[0]);
-        JS.put("hMin", getEtapaActual().getHumedad()[1]);
-        JS.put("tMax", getEtapaActual().getTemperatura()[0]);
-        JS.put("tMin", getEtapaActual().getTemperatura()[1]);
-        JS.put("lMax", getEtapaActual().getLuminosidad()[0]);
-        JS.put("lMin", getEtapaActual().getLuminosidad()[1]);
-        JS.put("DuracionLimite", getEtapaActual().getDuracionLimite());
-        JS.put("DuracionActual", getEtapaActual().getDuracionActual());
         
+        if(etapa != null ){
+            JS.put("Etapa", etapa.getNombreTipo());
+            JS.put("hMax", etapa.getHumedad()[0]);
+            JS.put("hMin", etapa.getHumedad()[1]);
+            JS.put("tMax", etapa.getTemperatura()[0]);
+            JS.put("tMin", etapa.getTemperatura()[1]);
+            JS.put("lMax", etapa.getLuminosidad()[0]);
+            JS.put("lMin", etapa.getLuminosidad()[1]);
+            JS.put("DuracionLimite", etapa.getDuracionLimite());
+            JS.put("DuracionActual", etapa.getDuracionActual());
+        }
+
         return JS;
     }
     

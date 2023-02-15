@@ -51,8 +51,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="1050" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="950" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnSimularPaso" max="32767" attributes="0"/>
+                          <Component id="btnSimularValores" max="32767" attributes="0"/>
+                          <Component id="btnSimulacionContinua" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -62,6 +68,15 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="447" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="btnSimularPaso" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnSimularValores" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnSimulacionContinua" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -77,17 +92,23 @@
                 <Component class="javax.swing.JTable" name="TablaPlantas">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="0">
+                      <Table columnCount="7" rowCount="0">
                         <Column editable="false" title="Nombre" type="java.lang.String"/>
-                        <Column editable="false" title="Ubicacion" type="java.lang.String"/>
+                        <Column editable="true" title="Ubicacion" type="java.lang.String"/>
+                        <Column editable="false" title="Etapa" type="java.lang.String"/>
                         <Column editable="false" title="Humedad" type="java.lang.String"/>
-                        <Column editable="true" title="Temperatura" type="java.lang.String"/>
-                        <Column editable="true" title="Luminosidad" type="java.lang.String"/>
-                        <Column editable="true" title="Duracion" type="java.lang.String"/>
+                        <Column editable="false" title="Temperatura" type="java.lang.String"/>
+                        <Column editable="false" title="Luminosidad" type="java.lang.String"/>
+                        <Column editable="false" title="Duracion" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                           <Title/>
                           <Editor/>
@@ -127,6 +148,27 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JButton" name="btnSimularPaso">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Simular Paso"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimularPasoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnSimularValores">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Simular Valores"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSimularValoresActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnSimulacionContinua">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Simulacion Continua"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel2">
@@ -166,7 +208,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="343" max="32767" attributes="0"/>
+                      <EmptySpace pref="397" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -294,7 +336,7 @@
                           <Component id="btnBorrar" min="-2" max="-2" attributes="0"/>
                           <Component id="UbicacionBorrar" min="-2" pref="123" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="805" max="32767" attributes="0"/>
+                      <EmptySpace pref="852" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

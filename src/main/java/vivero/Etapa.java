@@ -41,7 +41,7 @@ public class Etapa {
         luminosidad[1] = lMin;
         
         this.duracionLimite = duracion;
-        duracionActual = 0;
+        duracionActual = 1;
         
     }
     
@@ -60,7 +60,7 @@ public class Etapa {
         temperatura = etapa.getTemperatura();
         luminosidad = etapa.getLuminosidad();
         duracionLimite = etapa.getDuracionLimite();
-        duracionActual = 0;
+        duracionActual = 1;
     }
     
     public String getNombreTipo(){
@@ -93,7 +93,7 @@ public class Etapa {
     
     public boolean paso(){
         duracionActual += 1;
-        return duracionActual < duracionLimite;
+        return duracionActual <= duracionLimite;
     }
     
 }
