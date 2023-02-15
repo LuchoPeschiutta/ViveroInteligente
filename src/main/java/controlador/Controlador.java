@@ -38,6 +38,10 @@ public class Controlador {
         return vivero.getListaPlantasNoPerennes();
     }
     
+    public ArrayList<String> getListaTiposPlantas(){
+        return vivero.getListaTiposPlantas();
+    }
+    
     public Integer[] getUbicacionesOcupadas(){
         return vivero.getUbicacionesOcupadas();
     }

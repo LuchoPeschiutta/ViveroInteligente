@@ -115,6 +115,9 @@ public class Vivero {
         
     }
     
+    public ArrayList<String> getListaTiposPlantas(){
+        return fabrica.getListaTiposPlantas();
+    }
     
     public ArrayList<String> getListaPlantasPerennes(){
         return fabrica.getListaPlantasPerennes();

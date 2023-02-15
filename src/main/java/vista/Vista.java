@@ -19,8 +19,6 @@ import org.json.JSONObject;
 public class Vista extends javax.swing.JFrame {
     
     protected Controlador controlador;
-    protected ArrayList<String> plantasPerennes;
-    protected ArrayList<String> plantasNoPerennes;
 
     /**
      * Creates new form Vista
@@ -31,12 +29,11 @@ public class Vista extends javax.swing.JFrame {
         this.controlador = controlador;
         
         DefaultComboBoxModel boxModel = new DefaultComboBoxModel();
-        boxModel.addElement("Perennes");
-        boxModel.addElement("NoPerennes");
+        for(String i : controlador.getListaTiposPlantas()){
+            boxModel.addElement(i);
+        }
+
         TipoPlantas.setModel(boxModel);
-        
-        plantasPerennes = controlador.getListaPlantasPerennes();
-        plantasNoPerennes = controlador.getListaPlantasNoPerennes();
         
         TipoPlantasActionPerformed(null);
         
@@ -44,7 +41,7 @@ public class Vista extends javax.swing.JFrame {
     
     public void llenarLista(){
         
-        String[] fila = new String[5];
+        String[] fila = new String[6];
         DefaultTableModel tableModel = (DefaultTableModel) TablaPlantas.getModel();
         ArrayList<JSONObject> lista = controlador.getEstadosPlantas();
         
@@ -56,6 +53,7 @@ public class Vista extends javax.swing.JFrame {
             fila[2] = "" + planta.getDouble("hMax") + " / " + planta.getDouble("Humedad") + " / " + planta.getDouble("hMin");
             fila[3] = "" + planta.getDouble("tMax") + " / " + planta.getDouble("Temperatura") + " / " + planta.getDouble("tMin");
             fila[4] = "" + planta.getDouble("lMax") + " / " + planta.getDouble("Luminosidad") + " / " + planta.getDouble("lMin");
+            fila[5] = "" + planta.getInt("DuracionActual") + " / " + planta.getInt("DuracionLimite");
             tableModel.addRow(fila);
         }
         
@@ -96,15 +94,22 @@ public class Vista extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Ubicacion", "Humedad", "Temperatura", "Luminosidad"
+                "Nombre", "Ubicacion", "Humedad", "Temperatura", "Luminosidad", "Duracion"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(TablaPlantas);
@@ -274,11 +279,11 @@ public class Vista extends javax.swing.JFrame {
         DefaultListModel listModel = new DefaultListModel();
 
         if(TipoPlantas.getSelectedIndex() == 0){
-            for(String planta : plantasPerennes){
+            for(String planta : controlador.getListaPlantasPerennes()){
                 listModel.addElement(planta);
             }
         }else{
-            for(String planta : plantasNoPerennes){
+            for(String planta : controlador.getListaPlantasNoPerennes()){
                 listModel.addElement(planta);
             }
         }
@@ -318,7 +323,9 @@ public class Vista extends javax.swing.JFrame {
                 
                 if(!controlador.crearPlanta(nombre, Integer.valueOf(ubicacion))){
                     JOptionPane.showMessageDialog(null, "Error inesperado al crear la nueva planta");
-                }  
+                }else{
+                    UbicacionAgregar.setText("");
+                } 
             }
             
         }                     
@@ -359,14 +366,7 @@ public class Vista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
-    private boolean contains(Integer[] lista, int valor){
-        for(Integer i: lista){
-            if(i == valor){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField PlantaSeleccionadaAgregar;
