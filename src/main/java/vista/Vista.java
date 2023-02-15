@@ -19,6 +19,7 @@ import org.json.JSONObject;
 public class Vista extends javax.swing.JFrame {
     
     protected Controlador controlador;
+    protected boolean simulando;
 
     /**
      * Creates new form Vista
@@ -27,6 +28,7 @@ public class Vista extends javax.swing.JFrame {
     public Vista(Controlador controlador) {
         initComponents();
         this.controlador = controlador;
+        simulando = false;
         
         DefaultComboBoxModel boxModel = new DefaultComboBoxModel();
         for(String i : controlador.getListaTiposPlantas()){
@@ -60,9 +62,9 @@ public class Vista extends javax.swing.JFrame {
                 fila[6] = "" + planta.getInt("DuracionActual") + " / " + planta.getInt("DuracionLimite");
             }else{
                 fila[2] = "Muerta";
-                fila[3] = "" + planta.getDouble("Humedad");
-                fila[4] = "" + planta.getDouble("Temperatura");
-                fila[5] = "" + planta.getDouble("Luminosidad");
+                fila[3] = "" + String.format("%.2f",planta.getDouble("Humedad"));
+                fila[4] = "" + String.format("%.1f",planta.getDouble("Temperatura"));
+                fila[5] = "" + String.format("%.2f",planta.getDouble("Luminosidad"));
                 fila[6] = "";
             }
             
@@ -144,6 +146,11 @@ public class Vista extends javax.swing.JFrame {
         });
 
         btnSimulacionContinua.setText("Simulacion Continua");
+        btnSimulacionContinua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimulacionContinuaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -403,6 +410,7 @@ public class Vista extends javax.swing.JFrame {
                     if(!controlador.eliminarPlanta(Integer.valueOf(ubicacion))){
                         JOptionPane.showMessageDialog(null, "Error inesperado al remover la planta");
                     }
+                    UbicacionBorrar.setText("");
                 }
                 
             }
@@ -417,6 +425,25 @@ public class Vista extends javax.swing.JFrame {
     private void btnSimularPasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularPasoActionPerformed
         controlador.avanzarPaso();
     }//GEN-LAST:event_btnSimularPasoActionPerformed
+
+    private void btnSimulacionContinuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulacionContinuaActionPerformed
+        
+        if(!simulando){
+            btnSimularPaso.setEnabled(false);
+            btnSimularValores.setEnabled(false);
+            btnSimulacionContinua.setText("Detener Simulacion");
+            controlador.activarSimulador();
+            simulando = true;
+        }else{
+            btnSimularPaso.setEnabled(true);
+            btnSimularValores.setEnabled(true);
+            btnSimulacionContinua.setText("Simulacion Continua");
+            controlador.desactivarSimulador();
+            simulando = false;
+        }
+        
+        
+    }//GEN-LAST:event_btnSimulacionContinuaActionPerformed
 
 
 

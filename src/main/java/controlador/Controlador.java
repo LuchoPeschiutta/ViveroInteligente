@@ -8,7 +8,6 @@ package controlador;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
 import org.json.JSONObject;
 import vivero.Vivero;
 import vista.Vista;
@@ -20,13 +19,16 @@ import vista.Vista;
 public class Controlador {
     
 
-    Vivero vivero;
-    Vista vista; 
+    protected Vivero vivero;
+    protected Vista vista; 
+    protected HiloSimulador simulador;
     
     
     public Controlador(){
         vivero = new Vivero();
         vista = new Vista(Controlador.this);
+        simulador = new HiloSimulador(Controlador.this);
+        simulador.start();
         
         vista.setVisible(true);
     }
@@ -103,6 +105,14 @@ public class Controlador {
         }
         
         vista.actualizarLista();
+    }
+    
+    public void activarSimulador(){
+        simulador.continuar();
+    }
+    
+    public void desactivarSimulador(){
+        simulador.detener();
     }
     
     
