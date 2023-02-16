@@ -34,9 +34,6 @@ public class Controlador {
     public Controlador(){
         vivero = new Vivero();
         
-        simulador = new HiloSimulador(Controlador.this);
-        simulador.start();
-        
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 vista = new Vista(Controlador.this);
@@ -66,29 +63,62 @@ public class Controlador {
         return vivero.ubicacionEstaOcupada(ubicacion);
     }
     
-    public void actualizarVista(){
+    public void actualizarTablaPlantas(){
+        ArrayList<JSONObject> listaEstados = getEstadosPlantas();
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
-                vista.actualizarLista();
+                vista.actualizarTablaPlantas(listaEstados);
             }
         });
     }
     
-    public boolean crearPlanta(String nombre, int ubicacion){
-        if(vivero.agregarPlanta(nombre, ubicacion)){
-            actualizarVista();
-            return true;
+    public void actualizarListaPlantas(int tipo){
+        
+        ArrayList<String> listaPlantas;
+        
+        if(tipo == 0){
+            listaPlantas = getListaPlantasPerennes();
         }else{
-            return false;
+            listaPlantas = getListaPlantasNoPerennes();
+        }
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run(){
+                vista.actualizarListaPlantas(listaPlantas);
+            }
+        });
+    }
+    
+    public void MessageDialog(String mensaje){
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run(){
+                vista.generarMessageDialog(mensaje);
+            }
+        });
+    }
+    
+    public void crearPlanta(String nombre, int ubicacion){
+        
+        if(ubicacionEstaOcupada(ubicacion)){
+            MessageDialog("La ubicacion seleccionada ya esta ocupada");
+        }else{
+            if(vivero.agregarPlanta(nombre, ubicacion)){
+                actualizarTablaPlantas();
+            }else{
+                MessageDialog("Error inesperado al crear la nueva planta");
+            }
         }
     }
     
-    public boolean eliminarPlanta(int ubicacion){
-        if(vivero.eliminarPlanta(ubicacion)){
-            actualizarVista();
-            return true;
+    public void eliminarPlanta(int ubicacion){
+        
+        if(!ubicacionEstaOcupada(ubicacion)){
+            MessageDialog("Esta ubicacion no contiene nunguna planta");
         }else{
-            return false;
+            if(vivero.eliminarPlanta(ubicacion)){
+                actualizarTablaPlantas();
+            }else{
+                MessageDialog("Error inesperado al remover la planta");
+            }
         }
     }
     
@@ -105,7 +135,7 @@ public class Controlador {
     
     public void avanzarPaso(){
         vivero.avanzarPaso();
-        actualizarVista();
+        actualizarTablaPlantas();
     }
     
     public void simularParametros(){
@@ -125,15 +155,20 @@ public class Controlador {
                     
         }
         
-        actualizarVista();
+        actualizarTablaPlantas();
     }
     
     public void activarSimulador(){
-        simulador.continuar();
+        if(simulador == null){
+            simulador = new HiloSimulador(Controlador.this);
+            simulador.start();
+        }
+        
     }
     
     public void desactivarSimulador(){
         simulador.detener();
+        simulador = null;
     }
     
     

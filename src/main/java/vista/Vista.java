@@ -30,22 +30,20 @@ public class Vista extends javax.swing.JFrame {
         this.controlador = controlador;
         simulando = false;
         
+        //Hardcodeamos estos elementos porque son los que soportan el progrma actual
         DefaultComboBoxModel boxModel = new DefaultComboBoxModel();
-        for(String i : controlador.getListaTiposPlantas()){
-            boxModel.addElement(i);
-        }
-
+        boxModel.addElement("Perennes");
+        boxModel.addElement("NoPerennes");
         TipoPlantas.setModel(boxModel);
         
-        TipoPlantasActionPerformed(null);
+        controlador.actualizarListaPlantas(0);
         
     }
     
-    public void actualizarLista(){
+    public void actualizarTablaPlantas(ArrayList<JSONObject> lista){
         
         String[] fila = new String[7];
         DefaultTableModel tableModel = (DefaultTableModel) TablaPlantas.getModel();
-        ArrayList<JSONObject> lista = controlador.getEstadosPlantas();
         
         tableModel.setRowCount(0);
         
@@ -69,8 +67,19 @@ public class Vista extends javax.swing.JFrame {
             }
             
             tableModel.addRow(fila);
-        }
-        
+        }   
+    }
+    
+    public void actualizarListaPlantas(ArrayList<String> plantas){
+        DefaultListModel listModel = new DefaultListModel();
+        for(String planta : plantas){
+                listModel.addElement(planta);
+            }
+        PlantasDisponibles.setModel(listModel);
+    }
+    
+    public void generarMessageDialog(String mensaje){
+        JOptionPane.showMessageDialog(null, mensaje);
     }
 
     /**
@@ -326,21 +335,13 @@ public class Vista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TipoPlantasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipoPlantasActionPerformed
-            
-        DefaultListModel listModel = new DefaultListModel();
 
-        if(TipoPlantas.getSelectedIndex() == 0){
-            for(String planta : controlador.getListaPlantasPerennes()){
-                listModel.addElement(planta);
+        new Thread(){
+            public void run(){
+                controlador.actualizarListaPlantas(TipoPlantas.getSelectedIndex());
             }
-        }else{
-            for(String planta : controlador.getListaPlantasNoPerennes()){
-                listModel.addElement(planta);
-            }
-        }
-        
-        PlantasDisponibles.setModel(listModel);
-        
+        }.start();
+    
     }//GEN-LAST:event_TipoPlantasActionPerformed
 
     private void PlantasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlantasDisponiblesMouseClicked
@@ -366,19 +367,13 @@ public class Vista extends javax.swing.JFrame {
             
         }else{
             
-            if(controlador.ubicacionEstaOcupada(Integer.valueOf(ubicacion))){
-                
-                JOptionPane.showMessageDialog(null, "La ubicacion seleccionada ya esta ocupada");
-                
-            }else{
-                
-                if(!controlador.crearPlanta(nombre, Integer.valueOf(ubicacion))){
-                    JOptionPane.showMessageDialog(null, "Error inesperado al crear la nueva planta");
-                }else{
-                    UbicacionAgregar.setText("");
-                } 
-            }
+            new Thread(){
+                public void run(){
+                    controlador.crearPlanta(nombre, Integer.valueOf(ubicacion));
+                }
+            }.start();
             
+            UbicacionAgregar.setText("");
         }                     
 
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -399,31 +394,32 @@ public class Vista extends javax.swing.JFrame {
             
         }else{
             
-            if(!controlador.ubicacionEstaOcupada(Integer.valueOf(ubicacion))){
-                
-                JOptionPane.showMessageDialog(null, "Esta ubicacion no contiene nunguna planta");
-                
-            }else{
-                
-                if(JOptionPane.showConfirmDialog(null, "Desea remover la planta ingresada?", "Confirmacion", JOptionPane.YES_NO_OPTION) == 0){
-                    
-                    if(!controlador.eliminarPlanta(Integer.valueOf(ubicacion))){
-                        JOptionPane.showMessageDialog(null, "Error inesperado al remover la planta");
+            if(JOptionPane.showConfirmDialog(null, "Desea remover la planta ingresada?", "Confirmacion", JOptionPane.YES_NO_OPTION) == 0){
+                new Thread(){
+                    public void run(){
+                        controlador.eliminarPlanta( Integer.valueOf(ubicacion));
                     }
-                    UbicacionBorrar.setText("");
-                }
-                
-            }
+                }.start();
             
+            UbicacionBorrar.setText("");
+            }
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnSimularValoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularValoresActionPerformed
-        controlador.simularParametros();
+        new Thread(){
+            public void run(){
+                controlador.simularParametros();
+            }
+        }.start();
     }//GEN-LAST:event_btnSimularValoresActionPerformed
 
     private void btnSimularPasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularPasoActionPerformed
-        controlador.avanzarPaso();
+        new Thread(){
+            public void run(){
+                controlador.avanzarPaso();
+            }
+        }.start();
     }//GEN-LAST:event_btnSimularPasoActionPerformed
 
     private void btnSimulacionContinuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulacionContinuaActionPerformed
@@ -432,13 +428,21 @@ public class Vista extends javax.swing.JFrame {
             btnSimularPaso.setEnabled(false);
             btnSimularValores.setEnabled(false);
             btnSimulacionContinua.setText("Detener Simulacion");
-            controlador.activarSimulador();
+            new Thread(){
+                public void run(){
+                    controlador.activarSimulador();
+                }
+            }.start();
             simulando = true;
         }else{
             btnSimularPaso.setEnabled(true);
             btnSimularValores.setEnabled(true);
             btnSimulacionContinua.setText("Simulacion Continua");
-            controlador.desactivarSimulador();
+            new Thread(){
+                public void run(){
+                    controlador.desactivarSimulador();
+                }
+            }.start();
             simulando = false;
         }
         

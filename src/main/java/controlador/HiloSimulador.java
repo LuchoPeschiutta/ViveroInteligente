@@ -18,45 +18,28 @@ public class HiloSimulador extends Thread{
         
         this.controlador = controlador;
         simulando = false;
-        contador = 0;
+        contador = 1;
         
     }
     
     @Override
     public void run(){
-        
-        while(true){
-            
-            while(simulando){
-
-                controlador.simularParametros();
-                if(contador%3 == 0){
-                    controlador.avanzarPaso();
-                }
-                contador++;
-
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException ex) {
-                    System.out.println("Sleep de HiloSimulador interrumpido");
-                }
-
+        simulando = true;
+        while(simulando){
+            //System.out.println("Simulando...");
+            controlador.simularParametros();
+            if(contador%3 == 0){
+                controlador.avanzarPaso();
             }
+            contador++;
 
-
-            synchronized(this){
-                try {
-                    wait();
-                } catch (InterruptedException ex) {
-                    System.out.println("Error en wait de HiloSimulador");
-                }
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException ex) {
+                System.out.println("Sleep de HiloSimulador interrumpido");
             }
         }
-    }
-    
-    public synchronized void continuar(){
-        simulando = true;
-        notify();
+        //System.out.println("Simulacion detenida");
     }
     
     public synchronized void detener(){
