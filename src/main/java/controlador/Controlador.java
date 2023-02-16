@@ -23,6 +23,12 @@ public class Controlador {
     protected Vista vista; 
     protected HiloSimulador simulador;
     
+    public static void main(String[] args) { 
+         
+        Controlador controlador = new Controlador();
+        
+    }
+    
     
     public Controlador(){
         vivero = new Vivero();
