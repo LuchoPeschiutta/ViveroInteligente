@@ -5,6 +5,7 @@
 package vivero;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import org.json.*;
@@ -68,6 +69,7 @@ public class Vivero {
             lista[i] = valor;
             i++;
         }
+        Arrays.sort(lista);
         return lista;
     }
     
