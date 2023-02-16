@@ -107,10 +107,13 @@ public class Vivero {
     public void avanzarPaso(){
         
         for(Planta planta: ubicacionesPlantas.values()){
+            planta.paso();
+            /*
             if(!planta.paso()){
                 System.out.println("La planta en ubicacion: " + Integer.toString(planta.getUbicacion()) + " a finalizado");
-                //Llevar a cabo proceso de remocion o lo que se disponga.
+                //Llevar a cabo proceso de remocion, finalizacion, o lo que se disponga.
             }
+            */
         }
         
     }

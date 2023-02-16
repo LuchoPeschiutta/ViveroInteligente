@@ -8,6 +8,7 @@ package controlador;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.SwingUtilities;
 import org.json.JSONObject;
 import vivero.Vivero;
 import vista.Vista;
@@ -32,11 +33,17 @@ public class Controlador {
     
     public Controlador(){
         vivero = new Vivero();
-        vista = new Vista(Controlador.this);
+        
         simulador = new HiloSimulador(Controlador.this);
         simulador.start();
         
-        vista.setVisible(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                vista = new Vista(Controlador.this);
+                vista.setVisible(true);
+            }
+        });
+
     }
     
     public ArrayList<String> getListaPlantasPerennes(){
@@ -59,9 +66,17 @@ public class Controlador {
         return vivero.ubicacionEstaOcupada(ubicacion);
     }
     
+    public void actualizarVista(){
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run(){
+                vista.actualizarLista();
+            }
+        });
+    }
+    
     public boolean crearPlanta(String nombre, int ubicacion){
         if(vivero.agregarPlanta(nombre, ubicacion)){
-            vista.actualizarLista();
+            actualizarVista();
             return true;
         }else{
             return false;
@@ -70,7 +85,7 @@ public class Controlador {
     
     public boolean eliminarPlanta(int ubicacion){
         if(vivero.eliminarPlanta(ubicacion)){
-            vista.actualizarLista();
+            actualizarVista();
             return true;
         }else{
             return false;
@@ -90,7 +105,7 @@ public class Controlador {
     
     public void avanzarPaso(){
         vivero.avanzarPaso();
-        vista.actualizarLista();
+        actualizarVista();
     }
     
     public void simularParametros(){
@@ -110,7 +125,7 @@ public class Controlador {
                     
         }
         
-        vista.actualizarLista();
+        actualizarVista();
     }
     
     public void activarSimulador(){
