@@ -5,8 +5,8 @@
 package controlador;
 
 /**
- *
- * @author pesch
+ * Subclase de Thread que se encarga de actualizar el progreso y simular valores constantemente para el Controlador.
+ * @author Luciano Peschiutta
  */
 public class HiloSimulador extends Thread{
     
@@ -14,6 +14,10 @@ public class HiloSimulador extends Thread{
     boolean simulando;
     int contador;
     
+    /**
+     * Constructor de la Clase
+     * @param controlador Referencia al Controlador con el que debe interactuar
+     */
     public HiloSimulador(Controlador controlador){
         
         this.controlador = controlador;
@@ -22,6 +26,9 @@ public class HiloSimulador extends Thread{
         
     }
     
+    /**
+     * Llama a los metodos avanzarPaso() y simularParametros() del controlador mientras la variable simulando == true
+     */
     @Override
     public void run(){
         simulando = true;
@@ -42,6 +49,9 @@ public class HiloSimulador extends Thread{
         //System.out.println("Simulacion detenida");
     }
     
+    /**
+     * Actualiza el valor de la variable simulando a false, lo que provoca la finalizacion del hilo
+     */
     public synchronized void detener(){
         simulando = false;
     }

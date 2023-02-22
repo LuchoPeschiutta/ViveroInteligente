@@ -14,13 +14,17 @@ import java.util.Date;
 
 
 /**
- *
- * @author pesch
+ * Clase encargada de generar nuevas plantas.
+ * @author Luciano Peschiutta
  */
 public class FabricaPlantas {
     
     Connection connect;
     
+    /**
+     * Constructor de la clase
+     * Abre una conexion con la DB Catalogo de Plantas
+     */
     public FabricaPlantas(){
         
         try{
@@ -31,7 +35,13 @@ public class FabricaPlantas {
         
     }
     
-    public Planta crearPlanta(String nombre, int ubicacion, String fechaPlantado){
+    /**
+     * Crea una planta nueva extrayendo sus datos de la DB
+     * @param nombre Nombre de la planta, debe coincidir con el nombre de alguna de las plantas de la DB
+     * @param fechaPlantado Fecha de plantado
+     * @return Planta creada o null en caso de error
+     */
+    public Planta crearPlanta(String nombre, String fechaPlantado){
 
         Planta P;
         ResultSet result;
@@ -45,8 +55,8 @@ public class FabricaPlantas {
             
             if(result.next()){
                 switch (result.getInt("TipoPlanta")) {
-                    case 1 -> P = new PlantaPerenne(result.getString("Nombre"), ubicacion, fechaPlantado);
-                    case 2 -> P = new PlantaNoPerenne(result.getString("Nombre"), ubicacion, fechaPlantado);
+                    case 1 -> P = new PlantaPerenne(result.getString("Nombre"), fechaPlantado);
+                    case 2 -> P = new PlantaNoPerenne(result.getString("Nombre"), fechaPlantado);
                     default -> {
                         return null;
                     }
@@ -72,15 +82,23 @@ public class FabricaPlantas {
         
     }
     
-    
-    public Planta crearPlanta(String nombre, int ubicacion){
+    /**
+     * Sobrecarga del metodo crearPlanta donde se toma el momento actual como fecha de plantado
+     * @param nombre Nombre de la planta, debe coincidir con el nombre de alguna de las plantas de la DB
+     * @return Planta creada o null en caso de error
+     */
+    public Planta crearPlanta(String nombre){
         
         Date date = new Date();
         
-        return crearPlanta(nombre, ubicacion, date.toString());
+        return crearPlanta(nombre, date.toString());
         
     }
     
+    /**
+     * Obtiene una lista con los diferentes tipos de plantas existentes en la DB
+     * @return Lista de nombres de tipos de plantas
+     */
     public ArrayList<String> getListaTiposPlantas(){
         
         ArrayList<String> tiposPlantas = new ArrayList();
@@ -102,6 +120,10 @@ public class FabricaPlantas {
         return tiposPlantas;
     }
     
+    /**
+     * Obtiene una lista con los nombres de Plantas Perennes de la DB 
+     * @return Lista de nombres de Plantas Perennes
+     */
     public ArrayList<String> getListaPlantasPerennes(){
         
         ArrayList<String> plantasPerennes = new ArrayList();
@@ -124,6 +146,10 @@ public class FabricaPlantas {
         return plantasPerennes;
     }
     
+    /**
+     * Obtiene una lista con los nombres de Plantas NoPerennes de la DB 
+     * @return Lista de nombres de Plantas NoPerennes
+     */
     public ArrayList<String> getListaPlantasNoPerennes(){
         
         ArrayList<String> plantasNoPerennes = new ArrayList();
@@ -148,7 +174,7 @@ public class FabricaPlantas {
     
 }
 
-/* Creado y llenado de la DB CatalogoPlantas:
+/* Creado y llenado de la DB CatalogoPlantas de muestra:
 
 CREATE TABLE [Plantas] (
 [ID] INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL,

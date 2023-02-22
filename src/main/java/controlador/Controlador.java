@@ -14,8 +14,8 @@ import vivero.Vivero;
 import vista.Vista;
 
 /**
- *
- * @author pesch
+ * Clase que toma el rol de Controlador del modelo MVC
+ * @author Luciano Peschiutta
  */
 public class Controlador {
     
@@ -24,13 +24,21 @@ public class Controlador {
     protected Vista vista; 
     protected HiloSimulador simulador;
     
+    /**
+     * Main de la aplicacion. 
+     * Crea un controlador y finaliza.
+     * @param args 
+     */
     public static void main(String[] args) { 
          
         Controlador controlador = new Controlador();
         
     }
     
-    
+    /**
+     * Constructor de la clase
+     * Crea la Vista
+     */
     public Controlador(){
         vivero = new Vivero();
         
@@ -43,26 +51,51 @@ public class Controlador {
 
     }
     
+    /**
+      * Obtiene la lista de Plantas Perennes disponibles
+      * @return Lista de Plantas Perennes
+      */
     public ArrayList<String> getListaPlantasPerennes(){
         return vivero.getListaPlantasPerennes();
     }
     
+    /**
+      * Obtiene la lista de Plantas NoPerennes disponibles
+      * @return Lista de Plantas NoPerennes
+      */
     public ArrayList<String> getListaPlantasNoPerennes(){
         return vivero.getListaPlantasNoPerennes();
     }
     
+    /**
+     * Obtiene la lista de tipos de plantas
+     * @return Lista de tipos de plantas
+     */
     public ArrayList<String> getListaTiposPlantas(){
         return vivero.getListaTiposPlantas();
     }
     
+    /**
+     * Obtiene un array ordenado de las ubicaciones que contienen Plantas del Vivero
+     * @return Array ordenado de ubicaciones ocupadas
+     */
     public Integer[] getUbicacionesOcupadas(){
         return vivero.getUbicacionesOcupadas();
     }
     
+    /**
+     * Comprueba si la ubicacion del Vivero esta ocupada
+     * @param ubicacion Ubicacion a comprobar
+     * @return True si la ubicacion esta ocupada por una planta
+     */
     public boolean ubicacionEstaOcupada(int ubicacion){
         return vivero.ubicacionEstaOcupada(ubicacion);
     }
     
+    /**
+     * Genera una task para que el EDT de la Vista actualize la tabla de Plantas
+     * Pasa la lista de estados de plantas obtenidos del Vivero
+     */
     public void actualizarTablaPlantas(){
         ArrayList<JSONObject> listaEstados = getEstadosPlantas();
         SwingUtilities.invokeLater(new Runnable() {
@@ -72,6 +105,10 @@ public class Controlador {
         });
     }
     
+    /**
+     * Genera una task para que el EDT de la Vista actualize la lista de Plantas
+     * @param tipo 0 para listar PlantasPerennes y 1 para PlantasNoPerennes
+     */
     public void actualizarListaPlantas(int tipo){
         
         ArrayList<String> listaPlantas;
@@ -88,6 +125,10 @@ public class Controlador {
         });
     }
     
+    /**
+     * Genera una task para que el EDT de la Vista mueste un MessageDialog
+     * @param mensaje Mensaje que contendra el MessageDialog
+     */
     public void MessageDialog(String mensaje){
         SwingUtilities.invokeLater(new Runnable() {
             public void run(){
@@ -96,6 +137,12 @@ public class Controlador {
         });
     }
     
+    /**
+     * Crea una planta en el vivero
+     * Interactua con la Vista mediante tasks para su EDT, que indican si se produjeron errores
+     * @param nombre Nombre de la nueva Planta
+     * @param ubicacion Ubicacion de la nueva Planta
+     */
     public void crearPlanta(String nombre, int ubicacion){
         
         if(ubicacionEstaOcupada(ubicacion)){
@@ -109,6 +156,11 @@ public class Controlador {
         }
     }
     
+    /**
+     * Elimina la planta de la ubicacion especificada
+     * Interactua con la Vista mediante tasks para su EDT, que indican si se produjeron errores
+     * @param ubicacion Ubicacion de la que se desea remover la planta
+     */
     public void eliminarPlanta(int ubicacion){
         
         if(!ubicacionEstaOcupada(ubicacion)){
@@ -122,6 +174,10 @@ public class Controlador {
         }
     }
     
+    /**
+     * Retorna una lista con los estados de todas las plantas del vivero
+     * @return Lista con estados de plantas 
+     */
     public ArrayList<JSONObject> getEstadosPlantas(){
         
         ArrayList<JSONObject> lista = new ArrayList();
@@ -133,11 +189,18 @@ public class Controlador {
         return lista;
     }
     
+    /**
+     * Llama al metodo avanzarPaso() del Vivero y actualiza la Vista mediante actualizarTablaPlantas()
+     */
     public void avanzarPaso(){
         vivero.avanzarPaso();
         actualizarTablaPlantas();
     }
     
+    /**
+     * Cambia los parametros actuales de todas las Plantas del Vivero, obteniendolos de manera aleatoria
+     * Actualiza la Vista a traves de actualizarTablaPlantas()
+     */
     public void simularParametros(){
         
         float humedad, temperatura, luminosidad;
@@ -158,17 +221,24 @@ public class Controlador {
         actualizarTablaPlantas();
     }
     
+    /**
+     * Crea un nuevo Thread de HiloSimulador para que actualize el progreso de las plantas del vivero y sus parametros constantemente
+     */
     public void activarSimulador(){
         if(simulador == null){
             simulador = new HiloSimulador(Controlador.this);
             simulador.start();
-        }
-        
+        }  
     }
     
+    /**
+     * Detiene el Thread HiloSimulador
+     */
     public void desactivarSimulador(){
-        simulador.detener();
-        simulador = null;
+        if(simulador == null){
+            simulador.detener();
+            simulador = null;
+        }
     }
     
     

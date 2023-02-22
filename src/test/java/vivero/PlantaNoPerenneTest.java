@@ -16,9 +16,12 @@ public class PlantaNoPerenneTest {
     public PlantaNoPerenneTest() {
     }
 
+    /*
+        Correcto funcionamiento del metodo paso
+    */
     @Test
     public void paso() {
-        Planta planta = new PlantaNoPerenne("Maiz", 0, "Hoy");
+        Planta planta = new PlantaNoPerenne("Maiz", "Hoy");
         planta.agregarEtapa(new Etapa(0, 90, 50, 40, 15, 20, 30, 10));
         planta.agregarEtapa(new Etapa(1, 90, 50, 40, 15, 20, 30, 10));
         planta.agregarEtapa(new Etapa(2, 90, 50, 40, 15, 20, 30, 10));

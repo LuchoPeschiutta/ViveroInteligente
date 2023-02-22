@@ -13,8 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import org.json.JSONObject;
 
 /**
- *
- * @author luciano
+ * Subclase de JFrame que toma el rol de Vista del modelo MVC
+ * @author Luciano Peschiutta
  */
 public class Vista extends javax.swing.JFrame {
     
@@ -22,15 +22,15 @@ public class Vista extends javax.swing.JFrame {
     protected boolean simulando;
 
     /**
-     * Creates new form Vista
-     * @param controlador
+     * Constructor de la Clase
+     * @param controlador Controlador del MVC
      */
     public Vista(Controlador controlador) {
         initComponents();
         this.controlador = controlador;
         simulando = false;
         
-        //Hardcodeamos estos elementos porque son los que soportan el progrma actual
+        //Hardcodeamos estos elementos porque son los que soportan el programa actual
         DefaultComboBoxModel boxModel = new DefaultComboBoxModel();
         boxModel.addElement("Perennes");
         boxModel.addElement("NoPerennes");
@@ -40,6 +40,10 @@ public class Vista extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Actualiza la Tabla de Plantas
+     * @param lista Lista de estados de Plantas
+     */
     public void actualizarTablaPlantas(ArrayList<JSONObject> lista){
         
         String[] fila = new String[7];
@@ -57,7 +61,7 @@ public class Vista extends javax.swing.JFrame {
                 fila[3] = "" + planta.getDouble("hMax") + " / " + String.format("%.2f", planta.getDouble("Humedad")) + " / " + planta.getDouble("hMin");
                 fila[4] = "" + planta.getDouble("tMax") + " / " + String.format("%.1f",planta.getDouble("Temperatura")) + " / " + planta.getDouble("tMin");
                 fila[5] = "" + planta.getDouble("lMax") + " / " + String.format("%.2f",planta.getDouble("Luminosidad")) + " / " + planta.getDouble("lMin");
-                fila[6] = "" + planta.getInt("DuracionActual") + " / " + planta.getInt("DuracionLimite");
+                fila[6] = "" + planta.getInt("Progreso") + " / " + planta.getInt("Duracion");
             }else{
                 fila[2] = "Muerta";
                 fila[3] = "" + String.format("%.2f",planta.getDouble("Humedad"));
@@ -70,6 +74,10 @@ public class Vista extends javax.swing.JFrame {
         }   
     }
     
+    /**
+     * Actualiza la lista de Plantas disponibles
+     * @param plantas Lista de Plantas
+     */
     public void actualizarListaPlantas(ArrayList<String> plantas){
         DefaultListModel listModel = new DefaultListModel();
         for(String planta : plantas){
@@ -78,6 +86,10 @@ public class Vista extends javax.swing.JFrame {
         PlantasDisponibles.setModel(listModel);
     }
     
+    /**
+     * Genera un MessageDialog
+     * @param mensaje Contenido del MessageDialog
+     */
     public void generarMessageDialog(String mensaje){
         JOptionPane.showMessageDialog(null, mensaje);
     }
@@ -334,6 +346,10 @@ public class Vista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Genera un nuevo thread que llama actualizarListaPlantas() del Controlador segun la casilla escogida del comboBox TipoPlantas
+     * @param evt 
+     */
     private void TipoPlantasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipoPlantasActionPerformed
 
         new Thread(){
@@ -344,6 +360,10 @@ public class Vista extends javax.swing.JFrame {
     
     }//GEN-LAST:event_TipoPlantasActionPerformed
 
+    /**
+     * Llena el TextField PlantaSeleccionada con la planta escogida de PlantasDisponibles
+     * @param evt 
+     */
     private void PlantasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlantasDisponiblesMouseClicked
         PlantaSeleccionadaAgregar.setText(PlantasDisponibles.getSelectedValue().toString());
     }//GEN-LAST:event_PlantasDisponiblesMouseClicked
@@ -355,7 +375,11 @@ public class Vista extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_UbicacionAgregarKeyTyped
-
+    
+    /**
+     * Genera un nuevo thread que llama crearPlanta del Controlador segun la Planta y ubicacion escogidas en la vista
+     * @param evt 
+     */
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         
         String nombre = PlantaSeleccionadaAgregar.getText();
@@ -378,6 +402,10 @@ public class Vista extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCrearActionPerformed
 
+    /**
+     * Solo permite la insercion de digitos en el TextField
+     * @param evt 
+     */
     private void UbicacionBorrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UbicacionBorrarKeyTyped
         
         if(!Character.isDigit(evt.getKeyChar())){
@@ -385,6 +413,10 @@ public class Vista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UbicacionBorrarKeyTyped
 
+    /**
+     * Genera un nuevo thread que llama eliminarPlanta() del Controlador segun la ubicacion seleccionada
+     * @param evt 
+     */
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         String ubicacion = UbicacionBorrar.getText();
         
@@ -406,6 +438,10 @@ public class Vista extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
+    /**
+     * Genera un nuevo thread que llama simularParametros() del Controlador
+     * @param evt 
+     */
     private void btnSimularValoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularValoresActionPerformed
         new Thread(){
             public void run(){
@@ -414,6 +450,10 @@ public class Vista extends javax.swing.JFrame {
         }.start();
     }//GEN-LAST:event_btnSimularValoresActionPerformed
 
+    /**
+     * Genera un nuevo thread que llama avanzarPaso() del Controlador 
+     * @param evt 
+     */
     private void btnSimularPasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimularPasoActionPerformed
         new Thread(){
             public void run(){
@@ -422,6 +462,12 @@ public class Vista extends javax.swing.JFrame {
         }.start();
     }//GEN-LAST:event_btnSimularPasoActionPerformed
 
+    /**
+     * Controla la funcionalidad y texto del boton de simulacion continua
+     * Dependiendo de su estado genera un nuevo thread que llama a activarSimulador() o desactivarSimulador() del Controlador
+     * Se encarga de bloquear tambien los otros botones de simulacion durante la simulacion continua
+     * @param evt 
+     */
     private void btnSimulacionContinuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulacionContinuaActionPerformed
         
         if(!simulando){

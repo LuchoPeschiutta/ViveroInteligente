@@ -18,7 +18,10 @@ public class ViveroTest {
     public ViveroTest() {
         
     }
-
+    
+    /*
+        Correcto funcionamiento de los metodos agregar y eliminar
+    */
     @Test
     public void TestAgregarYEliminarPlanta() {
         
@@ -39,7 +42,9 @@ public class ViveroTest {
         
     }
     
-    
+    /*
+        Correcto funcionamiento de los metodos ubicacionEstaOcupada y getUbicacionesOcupadas
+    */
     @Test
     public void TestUbicacionesOcupadas(){
         
@@ -51,10 +56,11 @@ public class ViveroTest {
         assertTrue(vivero.ubicacionEstaOcupada(0));
         assertTrue(vivero.ubicacionEstaOcupada(15));
         assertTrue(vivero.ubicacionEstaOcupada(10));
+        assertFalse(vivero.ubicacionEstaOcupada(5));
         
         Integer[] lista = vivero.getUbicacionesOcupadas();
         
-        Arrays.sort(lista);
+        assertEquals(3, lista.length);
         
         assertTrue(lista[0]==0);
         assertTrue(lista[1]==10);
@@ -62,7 +68,9 @@ public class ViveroTest {
         
     }
     
-    
+    /*
+        Correcto funcionamiento del metodo actualizarPlanta
+    */
     @Test
     public void TestActualizarPlanta() {
         
@@ -87,6 +95,9 @@ public class ViveroTest {
         
     }
     
+    /*
+        Correcto funcionamiento del metodo avanzarPaso
+    */
     @Test
     public void TestAvanzarPaso(){
         
@@ -100,7 +111,7 @@ public class ViveroTest {
             vivero.avanzarPaso();
         }
         
-        assertEquals(2,vivero.getEstadoPlanta(0).getInt("DuracionActual"));
+        assertEquals(3,vivero.getEstadoPlanta(0).getInt("Progreso"));
         
         vivero.agregarPlanta("Rosa", 1);
         vivero.agregarPlanta("Limon", 2);
@@ -109,9 +120,9 @@ public class ViveroTest {
             vivero.avanzarPaso();
         }
         
-        assertEquals(4,vivero.getEstadoPlanta(0).getInt("DuracionActual"));
-        assertEquals(2,vivero.getEstadoPlanta(1).getInt("DuracionActual"));
-        assertEquals(2,vivero.getEstadoPlanta(2).getInt("DuracionActual"));
+        assertEquals(5,vivero.getEstadoPlanta(0).getInt("Progreso"));
+        assertEquals(3,vivero.getEstadoPlanta(1).getInt("Progreso"));
+        assertEquals(3,vivero.getEstadoPlanta(2).getInt("Progreso"));
         
         
     }
