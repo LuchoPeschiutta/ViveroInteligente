@@ -115,9 +115,7 @@ public class Vista extends javax.swing.JFrame {
         PlantasDisponibles = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         TipoPlantas = new javax.swing.JComboBox<>();
-        PlantaSeleccionadaAgregar = new javax.swing.JTextField();
         btnCrear = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         UbicacionAgregar = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
@@ -205,11 +203,6 @@ public class Vista extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Plantas", jPanel1);
 
-        PlantasDisponibles.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PlantasDisponiblesMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(PlantasDisponibles);
 
         jLabel1.setText("Tipo de Planta:");
@@ -220,16 +213,12 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        PlantaSeleccionadaAgregar.setEditable(false);
-
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearActionPerformed(evt);
             }
         });
-
-        jLabel2.setText("Planta:");
 
         jLabel3.setText("Ubicacion:");
 
@@ -256,14 +245,10 @@ public class Vista extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCrear)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(57, 57, 57)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PlantaSeleccionadaAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(UbicacionAgregar))))
-                .addContainerGap(397, Short.MAX_VALUE))
+                        .addComponent(jLabel3)
+                        .addGap(56, 56, 56)
+                        .addComponent(UbicacionAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(398, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,16 +261,12 @@ public class Vista extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(PlantaSeleccionadaAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(UbicacionAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
+                        .addGap(20, 20, 20)
                         .addComponent(btnCrear)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Agregar", jPanel2);
@@ -360,14 +341,6 @@ public class Vista extends javax.swing.JFrame {
     
     }//GEN-LAST:event_TipoPlantasActionPerformed
 
-    /**
-     * Llena el TextField PlantaSeleccionada con la planta escogida de PlantasDisponibles
-     * @param evt 
-     */
-    private void PlantasDisponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlantasDisponiblesMouseClicked
-        PlantaSeleccionadaAgregar.setText(PlantasDisponibles.getSelectedValue().toString());
-    }//GEN-LAST:event_PlantasDisponiblesMouseClicked
-
     private void UbicacionAgregarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UbicacionAgregarKeyTyped
        
         if(!Character.isDigit(evt.getKeyChar())){
@@ -382,10 +355,10 @@ public class Vista extends javax.swing.JFrame {
      */
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         
-        String nombre = PlantaSeleccionadaAgregar.getText();
+        String nombre = PlantasDisponibles.getSelectedValue();
         String ubicacion = UbicacionAgregar.getText();
         
-        if(nombre.length() <= 0 || ubicacion.length() <= 0){
+        if(nombre == null || ubicacion.length() <= 0){
             
             JOptionPane.showMessageDialog(null, "Debe seleccionar una planta y una ubicacion");
             
@@ -498,7 +471,6 @@ public class Vista extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField PlantaSeleccionadaAgregar;
     private javax.swing.JList<String> PlantasDisponibles;
     private javax.swing.JTable TablaPlantas;
     private javax.swing.JComboBox<String> TipoPlantas;
@@ -510,7 +482,6 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton btnSimularPaso;
     private javax.swing.JButton btnSimularValores;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
