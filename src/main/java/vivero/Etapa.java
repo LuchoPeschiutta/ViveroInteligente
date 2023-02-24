@@ -141,11 +141,15 @@ public class Etapa {
     
     /**
      * Incrementa el progreso de la etapa en 1 e indica si la etapa aun no termina
-     * @return True si progreso <= duracion
+     * @return True si la etapa aun no termina
      */
     public boolean paso(){
-        progreso += 1;
-        return progreso <= duracion;
+        if(progreso < duracion){
+            progreso += 1;
+            return true;
+        }else{
+            return false;
+        }
     }
     
 }

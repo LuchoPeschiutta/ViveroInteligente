@@ -54,8 +54,8 @@ public class ViveroTest {
         vivero.agregarPlanta("Pino", 10);
         
         assertTrue(vivero.ubicacionEstaOcupada(0));
-        assertTrue(vivero.ubicacionEstaOcupada(15));
         assertTrue(vivero.ubicacionEstaOcupada(10));
+        assertTrue(vivero.ubicacionEstaOcupada(15));
         assertFalse(vivero.ubicacionEstaOcupada(5));
         
         Integer[] lista = vivero.getUbicacionesOcupadas();
