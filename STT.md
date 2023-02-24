@@ -26,6 +26,8 @@ de vivero.
 Se utilizó SQLite para crear la base de datos que almacena el catálogo de plantas. Dentro de la clase FabricaPlantas se realizan las queries necesarias para recuperar los datos y
 crear los nuevos objetos de la clase Planta.
 
+![Diagrama de la DB CatalogoPlantas](./DB_Diagram.pmg)
+
 ## Uso de Multithreading y sincronización
 
 Se utiliza un hilo diferente para la ejecución de la simulación continua. Los eventos que se generan en la vista y requieren acciones sobre el controlador delegan dichas tareas a nuevos hilos.
